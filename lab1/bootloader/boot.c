@@ -4,9 +4,10 @@
 
 void bootMain(void) {
 	//TODO
-
+	void (*app)(void) = (void(*)(void))0x8c00;//app函数指向0x8c00处(程序位置)
+	readSect((void*)app, 1);//读取磁盘第1扇区中的Hello, World!程序至内存中0x9c00处(app/app.s中程序链接至此)
+	app();//执行程序
 }
-
 
 void waitDisk(void) { // waiting for disk
 	while((inByte(0x1F7) & 0xC0) != 0x40);
